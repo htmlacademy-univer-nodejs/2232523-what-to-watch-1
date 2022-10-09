@@ -6,7 +6,7 @@ export type Movie = {
   name: string;
   description: string;
   postDate: Date;
-  genre: Genre;
+  genre?: Genre;
   releaseYear: number;
   rating: number;
   moviePreview: string;

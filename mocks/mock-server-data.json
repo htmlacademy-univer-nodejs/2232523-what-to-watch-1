@@ -1,0 +1,89 @@
+{
+  "api": {
+    "titles": [
+      "1+1",
+      "Ходячий замок",
+      "Век Адалин",
+      "Маска",
+      "Кто подставил кролика Роджера"
+    ],
+    "descriptions": [
+      "Пострадав в результате несчастного случая, богатый аристократ Филипп нанимает в помощники человека, который менее всего подходит для этой работы, — молодого жителя предместья Дрисса, только что освободившегося из тюрьмы. Несмотря на то, что Филипп прикован к инвалидному креслу, Дриссу удается привнести в размеренную жизнь аристократа дух приключений.",
+      "Злая ведьма заточила 18-летнюю Софи в тело старухи. В поисках того, кто поможет ей вернуться к своему облику, Софи знакомится с могущественным волшебником Хаулом и его демоном Кальцифером. Кальцифер должен служить Хаулу по договору, условия которого он не может разглашать. Девушка и демон решают помочь друг другу избавиться от злых чар…",
+      "По сюжету главная героиня родилась вместе с XX веком и живет на свете уже сто лет, но при этом не стареет. Несмотря на свою долгую жизнь, Аделайн так и не смогла найти любимого человека. Однако наконец-то она встречает мужчину, ради которого сможет снова стать смертной и состариться вместе с ним.",
+      "Скромный, застенчивый служащий банка закомплексован настолько, что чувствует себя неуверенно с красивыми девушками. Волею судьбы к нему попадает волшебная маска, и Стенли Ипкис приобретает способность превращаться в неуязвимое мультяшное существо из забавных комиксов.",
+      "Частный детектив расследует загадочное преступление, в котором подозревается… мультипликационный персонаж кролик Роджер! Сыщик попадает в непредсказуемый мир, где его ожидают нарисованные злодеи с настоящими револьверами, говорящий автомобиль и соблазнительная мультяшная красотка. Наконец, на горизонте появляется мрачная фигура того, кто подставил кролика Роджера…"
+    ],
+    "previewPaths": [
+      "https://what-to-watch.ru/one-plus-one-preview",
+      "https://what-to-watch.ru/walking-castle-preview",
+      "https://what-to-watch.ru/the-age-of-adaline-preview",
+      "https://what-to-watch.ru/the-mask-preview",
+      "https://what-to-watch.ru/who-framed-roger-rabbit-preview"
+    ],
+    "moviePaths": [
+      "https://what-to-watch.ru/one-plus-one",
+      "https://what-to-watch.ru/walking-castle",
+      "https://what-to-watch.ru/the-age-of-adaline",
+      "https://what-to-watch.ru/the-mask",
+      "https://what-to-watch.ru/who-framed-roger-rabbit"
+    ],
+    "actors": [
+      "Omar Si",
+      "Vedma Pustoshi",
+      "Blake Lively",
+      "Jim Carrey",
+      "Bob Hoskins"
+    ],
+    "directors": [
+      "Olivier Nakache",
+      "Hayao Miyazaki",
+      "Lee Toland Krieger",
+      "Chuck Russell",
+      "Robert Zemeckis"
+    ],
+    "users": [
+      "Артур Пирожков",
+      "Женя Донцова",
+      "Тимур Родригез",
+      "Человек Тестовый",
+      "Кот Олег"
+    ],
+    "emails": [
+      "freedom@pisem.local",
+      "rolan@pochta.local",
+      "author@mir.local",
+      "test@lost.loca",
+      "kujo-fan@story.local"
+    ],
+    "avatarPaths": [
+      "user.jpg",
+      "photo.jpg",
+      "awesome-avatar.jpg",
+      "roland.jpg",
+      "smit.jpg",
+      "coffee.jpg"
+    ],
+    "posterPaths": [
+      "one-plus-one-poster.jpg",
+      "walking-castle-poster.jpg",
+      "the-age-of-adaline-poster.jpg",
+      "the-mask-poster.jpg",
+      "who-framed-roger-rabbit-poster.jpg"
+    ],
+    "backgroundImagePaths": [
+      "one-plus-one-bg.jpg",
+      "walking-castle-bg.jpg",
+      "the-age-of-adaline-bg.jpg",
+      "the-mask-bg.jpg",
+      "who-framed-roger-rabbit-bg.jpg"
+    ],
+    "backgroundColors": [
+      "brown",
+      "blue",
+      "yellow",
+      "green",
+      "red"
+    ]
+  }
+}
