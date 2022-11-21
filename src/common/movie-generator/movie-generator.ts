@@ -1,6 +1,6 @@
 import {MockData} from '../../types/mock-data.type.js';
 import {getRandomItem, getRandomItems, generateRandomValue} from '../../utils/random.js';
-import {GENRE} from '../../types/genre-type.js';
+import {GENRE} from '../../types/genre.type.js';
 import dayjs from 'dayjs';
 import {MovieGeneratorInterface} from './movie-generator.interface';
 
