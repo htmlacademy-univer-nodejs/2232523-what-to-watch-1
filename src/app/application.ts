@@ -1,21 +1,22 @@
 import 'reflect-metadata';
-import {inject, injectable} from 'inversify';
-import {LoggerInterface} from '../common/logger/logger.interface.js';
-import {ConfigInterface} from '../common/config/config.interface.js';
-import {Component} from '../types/component.type.js';
-import {getURI} from '../utils/db.js';
-import {DatabaseInterface} from '../common/database-client/database.interface.js';
+import { inject, injectable } from 'inversify';
+import { LoggerInterface } from '../common/logger/logger.interface.js';
+import { ConfigInterface } from '../common/config/config.interface.js';
+import { Component } from '../types/component.type.js';
+import { getURI } from '../utils/db.js';
+import { DatabaseInterface } from '../common/database-client/database.interface.js';
 
 @injectable()
 export default class Application {
   constructor(
     @inject(Component.LoggerInterface) private logger: LoggerInterface,
     @inject(Component.ConfigInterface) private config: ConfigInterface,
-    @inject(Component.DatabaseInterface) private databaseClient: DatabaseInterface
+    @inject(Component.DatabaseInterface)
+    private databaseClient: DatabaseInterface
   ) {}
 
   public async init() {
-    this.logger.info('Application initialization...');
+    this.logger.info('Application initialization');
     this.logger.info(`Get value from env $PORT: ${this.config.get('PORT')}`);
 
     const uri = getURI(
@@ -23,9 +24,9 @@ export default class Application {
       this.config.get('DB_PASSWORD'),
       this.config.get('DB_HOST'),
       this.config.get('DB_PORT'),
-      this.config.get('DB_NAME'),
+      this.config.get('DB_NAME')
     );
-    console.log(uri);
-    await this.databaseClient.connect('mongodb://admin:test@mongodb:27017/course-nodejs-restapi?authSource=admin');
+
+    await this.databaseClient.connect(uri);
   }
 }

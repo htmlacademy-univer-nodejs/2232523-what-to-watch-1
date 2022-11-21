@@ -1,5 +1,6 @@
 import {Movie} from '../types/movie.type.js';
-import {isRightGenre} from '../types/genre-type.js';
+import {isRightGenre} from '../types/genre.type.js';
+import crypto from 'crypto';
 
 export const createMovie = (row: string) : Movie => {
   const tokens = row.replace('\n', '').split('\t');
@@ -19,7 +20,6 @@ export const createMovie = (row: string) : Movie => {
     userName,
     email,
     avatarPath,
-    password,
     poster,
     backgroundImage,
     backgroundColor
@@ -38,7 +38,7 @@ export const createMovie = (row: string) : Movie => {
     producer,
     movieDuration: Number.parseInt(movieDuration, 10),
     commentsCount: Number.parseInt(commentsCount, 10),
-    user: {userName, email, avatarPath, password},
+    user: {userName, email, avatarPath},
     poster,
     backgroundImage,
     backgroundColor
@@ -48,3 +48,8 @@ export const createMovie = (row: string) : Movie => {
 export function getErrorMessage(error: unknown): string {
   return error instanceof Error ? error.message : '';
 }
+
+export const createSHA256 = (line: string, salt: string): string => {
+  const shaHasher = crypto.createHmac('sha256', salt);
+  return shaHasher.update(line).digest('hex');
+};
