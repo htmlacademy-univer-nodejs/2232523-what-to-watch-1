@@ -3,20 +3,20 @@ import { Genre } from './genre.type.js';
 import { Actor } from './actor.type.js';
 
 export type Movie = {
-  name: string;
+  title: string;
   description: string;
-  postDate: Date;
+  publishingDate: Date;
   genre: Genre;
   releaseYear: number;
   rating: number;
-  moviePreview: string;
-  movie: string;
+  previewPath: string;
+  moviePath: string;
   actors: Actor[];
-  producer: string;
-  movieDuration: number;
+  director: string;
+  durationInMinutes: number;
   commentsCount: number;
   user: User;
-  poster: string;
-  backgroundImage: string;
+  posterPath: string;
+  backgroundImagePath: string;
   backgroundColor: string;
 }

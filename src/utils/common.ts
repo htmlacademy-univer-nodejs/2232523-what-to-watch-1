@@ -25,22 +25,22 @@ export const createMovie = (row: string) : Movie => {
     backgroundColor
   ] = tokens;
   return {
-    name: title,
+    title: title,
     description,
-    postDate: new Date(createdDate),
+    publishingDate: new Date(createdDate),
     genre: isRightGenre(genre),
     releaseYear : Number.parseInt(releaseYear, 10),
     rating: parseFloat(rating),
-    moviePreview,
-    movie,
+    previewPath: moviePreview,
+    moviePath: movie,
     actors: actors.split(';')
       .map((name) => ({name})),
-    producer,
-    movieDuration: Number.parseInt(movieDuration, 10),
+    director: producer,
+    durationInMinutes: Number.parseInt(movieDuration, 10),
     commentsCount: Number.parseInt(commentsCount, 10),
     user: {userName, email, avatarPath},
-    poster,
-    backgroundImage,
+    posterPath: poster,
+    backgroundImagePath: backgroundImage,
     backgroundColor
   };
 };
