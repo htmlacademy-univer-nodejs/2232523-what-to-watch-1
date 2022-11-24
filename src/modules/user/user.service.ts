@@ -6,12 +6,14 @@ import { inject, injectable } from 'inversify';
 import { Component } from '../../types/component.type.js';
 import { LoggerInterface } from '../../common/logger/logger.interface.js';
 import {types} from '@typegoose/typegoose';
+import {MovieEntity} from '../movie/movie.entity.js';
 
 @injectable()
 export default class UserService implements UserServiceInterface {
   constructor(
     @inject(Component.LoggerInterface) private logger: LoggerInterface,
-    @inject(Component.UserModel) private readonly userModel: types.ModelType<UserEntity>
+    @inject(Component.UserModel) private readonly userModel: types.ModelType<UserEntity>,
+    @inject(Component.MovieModel) private readonly movieModel: types.ModelType<MovieEntity>
   ) {}
 
   public async create(
@@ -44,5 +46,22 @@ export default class UserService implements UserServiceInterface {
     }
 
     return this.create(dto, salt);
+  }
+
+  async findToWatch(userId: string): Promise<DocumentType<MovieEntity>[]> {
+    const moviesToWatch = await this.userModel.findById(userId).select('moviesToWatch');
+    return this.movieModel.find({id: { $in: moviesToWatch }});
+  }
+
+  async addToWatch(movieId: string, userId: string): Promise<void | null> {
+    return this.userModel.findByIdAndUpdate(userId, {
+      $push: {moviesToWatch: movieId}
+    });
+  }
+
+  async deleteToWatch(movieId: string, userId: string): Promise<void | null> {
+    return this.userModel.findByIdAndUpdate(userId, {
+      $pull: {moviesToWatch: movieId}
+    });
   }
 }

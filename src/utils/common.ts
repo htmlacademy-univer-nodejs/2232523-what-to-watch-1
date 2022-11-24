@@ -1,46 +1,43 @@
-import {Movie} from '../types/movie.type.js';
 import {isRightGenre} from '../types/genre.type.js';
 import crypto from 'crypto';
 
-export const createMovie = (row: string) : Movie => {
+export const createMovie = (row: string) => {
   const tokens = row.replace('\n', '').split('\t');
   const [
     title,
     description,
-    createdDate,
+    publishingDate,
     genre,
     releaseYear,
     rating,
-    moviePreview,
-    movie,
+    previewPath,
+    moviePath,
     actors,
-    producer,
-    movieDuration,
-    commentsCount,
+    director,
+    durationInMinutes,
     userName,
     email,
     avatarPath,
-    poster,
-    backgroundImage,
+    posterPath,
+    backgroundImagePath,
     backgroundColor
   ] = tokens;
   return {
-    title: title,
+    title,
     description,
-    publishingDate: new Date(createdDate),
+    publishingDate: new Date(publishingDate),
     genre: isRightGenre(genre),
-    releaseYear : Number.parseInt(releaseYear, 10),
-    rating: parseFloat(rating),
-    previewPath: moviePreview,
-    moviePath: movie,
-    actors: actors.split(';')
-      .map((name) => ({name})),
-    director: producer,
-    durationInMinutes: Number.parseInt(movieDuration, 10),
-    commentsCount: Number.parseInt(commentsCount, 10),
-    user: {userName, email, avatarPath},
-    posterPath: poster,
-    backgroundImagePath: backgroundImage,
+    releaseYear: Number(releaseYear),
+    rating: Number(rating),
+    previewPath,
+    moviePath,
+    actors: actors.split(';'),
+    director,
+    durationInMinutes: Number(durationInMinutes),
+    commentsCount: 0,
+    user: {email, name: userName, avatarPath},
+    posterPath,
+    backgroundImagePath,
     backgroundColor
   };
 };
@@ -52,4 +49,10 @@ export function getErrorMessage(error: unknown): string {
 export const createSHA256 = (line: string, salt: string): string => {
   const shaHasher = crypto.createHmac('sha256', salt);
   return shaHasher.update(line).digest('hex');
+};
+
+export const checkPassword = (password: string) => {
+  if (password.length < 6 || password.length > 12) {
+    throw new Error('Password should be from 6 to 12 characters');
+  }
 };

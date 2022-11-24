@@ -12,8 +12,6 @@ const MIN_RATING = 1;
 const MAX_RATING = 5;
 const FIRST_WEEK_DAY = 1;
 const LAST_WEEK_DAY = 7;
-const MAX_COMMENTS_COUNT = 1000;
-const MIN_COMMENTS_COUNT = 0;
 
 export default class MovieGenerator implements MovieGeneratorInterface {
   constructor(private readonly mockData: MockData) {}
@@ -25,18 +23,16 @@ export default class MovieGenerator implements MovieGeneratorInterface {
     const genre = getRandomItem(GENRE);
     const releaseYear = generateRandomValue(MIN_RELEASE_YEAR, MAX_RELEASE_YEAR);
     const rating = generateRandomValue(MIN_RATING, MAX_RATING, 1);
-    const moviePreview = getRandomItem<string>(this.mockData.moviePreviews);
-    const movie = getRandomItem<string>(this.mockData.movies);
+    const previewPath = getRandomItem<string>(this.mockData.previewPathes);
+    const moviePath = getRandomItem<string>(this.mockData.moviePathes);
     const actors = getRandomItems<string>(this.mockData.actors).join(';');
-    const producer = getRandomItem<string>(this.mockData.producers);
-    const movieDuration = generateRandomValue(MIN_DURATION, MAX_DURATION);
-    const commentsCount = generateRandomValue(MIN_COMMENTS_COUNT, MAX_COMMENTS_COUNT);
+    const director = getRandomItem<string>(this.mockData.directors);
+    const durationInMinutes = generateRandomValue(MIN_DURATION, MAX_DURATION);
     const userName = getRandomItem<string>(this.mockData.users);
     const email = getRandomItem<string>(this.mockData.emails);
-    const avatarPath = getRandomItem<string>(this.mockData.avatarPaths);
-    const password = getRandomItem<string>(this.mockData.passwords);
-    const poster = getRandomItem<string>(this.mockData.posters);
-    const backgroundImage = getRandomItem<string>(this.mockData.backgroundImages);
+    const avatar = getRandomItem<string>(this.mockData.avatars);
+    const posterPath = getRandomItem<string>(this.mockData.posterPathes);
+    const backgroundImagePath = getRandomItem<string>(this.mockData.backgroundImagePathes);
     const backgroundColor = getRandomItem<string>(this.mockData.backgroundColors);
 
     return [
@@ -46,18 +42,16 @@ export default class MovieGenerator implements MovieGeneratorInterface {
       genre,
       releaseYear,
       rating,
-      moviePreview,
-      movie,
+      previewPath,
+      moviePath,
       actors,
-      producer,
-      movieDuration,
-      commentsCount,
+      director,
+      durationInMinutes,
       userName,
       email,
-      avatarPath,
-      password,
-      poster,
-      backgroundImage,
+      avatar,
+      posterPath,
+      backgroundImagePath,
       backgroundColor
     ].join('\t');
   }
