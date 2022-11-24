@@ -13,8 +13,9 @@ import { Movie } from '../types/movie.type.js';
 import { createMovie, getErrorMessage } from '../utils/common.js';
 import { getURI } from '../utils/db.js';
 import { CliCommandInterface } from './cli-command.interface.js';
+import {ConfigInterface} from '../common/config/config.interface.js';
+import ConfigService from '../common/config/config.service.js';
 
-const DEFAULT_DB_PORT = 27017;
 const DEFAULT_USER_PASSWORD = '123456';
 
 export default class ImportCommand implements CliCommandInterface {
@@ -22,8 +23,9 @@ export default class ImportCommand implements CliCommandInterface {
   private userService!: UserServiceInterface;
   private movieService!: MovieServiceInterface;
   private databaseService!: DatabaseInterface;
-  private logger: LoggerInterface;
   private salt!: string;
+  private readonly logger: LoggerInterface;
+  private readonly config: ConfigInterface;
 
   constructor() {
     this.onLine = this.onLine.bind(this);
@@ -31,44 +33,51 @@ export default class ImportCommand implements CliCommandInterface {
 
     this.logger = new ConsoleLoggerService();
     this.movieService = new MovieService(this.logger, MovieModel);
-    this.userService = new UserService(this.logger, UserModel);
+    this.userService = new UserService(this.logger, UserModel, MovieModel);
     this.databaseService = new DatabaseService(this.logger);
+    this.config = new ConfigService(this.logger);
   }
 
   private async saveMovie(movie: Movie) {
-    const user = await this.userService.findOrCreate(
-      {
-        ...movie.user,
-        password: DEFAULT_USER_PASSWORD,
-      },
-      this.salt
-    );
+    const user = await this.userService.findOrCreate({
+      ...movie.user,
+      password: process.env.DB_PASSWORD || DEFAULT_USER_PASSWORD
+    }, this.salt);
 
     await this.movieService.create({
       ...movie,
-      user: user.id,
+      userId: user.id,
     });
   }
 
   private async onLine(line: string, resolve: () => void) {
     const movie = createMovie(line);
-    console.log(movie);
+    this.logger.info(`Created new movie: ${movie}`);
     await this.saveMovie(movie);
     resolve();
   }
 
   private onComplete(count: number) {
-    console.log(`${count} rows imported.`);
+    this.logger.info(`${count} rows imported.`);
     this.databaseService.disconnect();
   }
 
-  public async execute(filename: string, login: string, password: string, host: string, dbname: string, salt: string): Promise<void> {
-    const uri = getURI(login, password, host, DEFAULT_DB_PORT, dbname);
-    this.salt = salt;
+  public async execute(filename: string): Promise<void> {
+    const uri = getURI(
+      this.config.get('DB_USER'),
+      this.config.get('DB_PASSWORD'),
+      this.config.get('DB_HOST'),
+      this.config.get('DB_PORT'),
+      this.config.get('DB_NAME')
+    );
+
+    this.salt = this.config.get('SALT');
     await this.databaseService.connect(uri);
+
     const fileReader = new TSVFileReader(filename.trim());
     fileReader.on('line', this.onLine);
     fileReader.on('end', this.onComplete);
+
     try {
       await fileReader.read();
     } catch (err) {
@@ -76,3 +85,4 @@ export default class ImportCommand implements CliCommandInterface {
     }
   }
 }
+

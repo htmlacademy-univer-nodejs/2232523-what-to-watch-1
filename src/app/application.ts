@@ -5,14 +5,15 @@ import { ConfigInterface } from '../common/config/config.interface.js';
 import { Component } from '../types/component.type.js';
 import { getURI } from '../utils/db.js';
 import { DatabaseInterface } from '../common/database-client/database.interface.js';
+//import { MovieServiceInterface } from '../modules/movie/movie-service.interface.js';
 
 @injectable()
 export default class Application {
   constructor(
     @inject(Component.LoggerInterface) private logger: LoggerInterface,
     @inject(Component.ConfigInterface) private config: ConfigInterface,
-    @inject(Component.DatabaseInterface)
-    private databaseClient: DatabaseInterface
+    @inject(Component.DatabaseInterface) private databaseClient: DatabaseInterface,
+    //@inject(Component.MovieServiceInterface) private movieService: MovieServiceInterface
   ) {}
 
   public async init() {
@@ -28,5 +29,8 @@ export default class Application {
     );
 
     await this.databaseClient.connect(uri);
+
+    //const t = await this.movieService.find();
+    //console.log(t);
   }
 }

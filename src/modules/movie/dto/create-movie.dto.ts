@@ -1,22 +1,19 @@
 import { Genre} from '../../../types/genre.type';
-import { Actor } from '../../../types/actor.type.js';
-import { User } from '../../../types/user.type.js';
 
 export default class CreateMovieDto {
-  name!: string;
+  title!: string;
   description!: string;
-  postDate!: Date;
+  publishingDate!: Date;
   genre!: Genre;
   releaseYear!: number;
   rating!: number;
-  moviePreview!: string;
-  movie!: string;
-  actors!: Actor[];
-  producer!: string;
-  movieDuration!: number;
-  commentsCount!: number;
-  user!: User;
-  poster!: string;
-  backgroundImage!: string;
+  previewPath!: string;
+  moviePath!: string;
+  actors!: string[];
+  director!: string;
+  durationInMinutes!: number;
+  userId!: string;
+  posterPath!: string;
+  backgroundImagePath!: string;
   backgroundColor!: string;
 }

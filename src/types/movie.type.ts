@@ -1,8 +1,8 @@
-import { User } from './user.type.js';
-import { Genre } from './genre.type.js';
-import { Actor } from './actor.type.js';
+import {Genre} from './genre.type.js';
+import {User} from './user.type.js';
 
 export type Movie = {
+  isPromo?: boolean;
   title: string;
   description: string;
   publishingDate: Date;
@@ -11,7 +11,7 @@ export type Movie = {
   rating: number;
   previewPath: string;
   moviePath: string;
-  actors: Actor[];
+  actors: string[];
   director: string;
   durationInMinutes: number;
   commentsCount: number;
@@ -19,4 +19,4 @@ export type Movie = {
   posterPath: string;
   backgroundImagePath: string;
   backgroundColor: string;
-}
+};

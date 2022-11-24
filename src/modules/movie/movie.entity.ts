@@ -13,13 +13,13 @@ export interface MovieEntity extends defaultClasses.Base {}
 })
 export class MovieEntity extends defaultClasses.TimeStamps {
   @prop({trim: true, required: true, minlength: 2, maxlength: 100})
-  public name!: string;
+  public title!: string;
 
   @prop({trim: true, required: true, minlength: 20, maxlength: 1024})
   public description!: string;
 
   @prop({required: true})
-  public postDate!: Date;
+  public publishingDate!: Date;
 
   @prop({
     type: () => String,
@@ -35,19 +35,19 @@ export class MovieEntity extends defaultClasses.TimeStamps {
   public rating!: number;
 
   @prop({required: true})
-  public moviePreview!: string;
+  public previewPath!: string;
 
   @prop({required: true})
-  public movie!: string;
+  public moviePath!: string;
 
   @prop({required: true})
   public actors!: string[];
 
   @prop({required: true, minlength: 2, maxlength: 50})
-  public producer!: string;
+  public director!: string;
 
   @prop({required: true})
-  public movieDuration!: number;
+  public durationInMinutes!: number;
 
   @prop({default: 0})
   public commentsCount!: number;
@@ -56,16 +56,19 @@ export class MovieEntity extends defaultClasses.TimeStamps {
     ref: UserEntity,
     required: true
   })
-  public user!: Ref<UserEntity>;
+  public userId!: Ref<UserEntity>;
 
   @prop({required: true, match: /([^\s]+(\.jpg)$)/})
-  public poster!: string;
+  public posterPath!: string;
 
   @prop({required: true, match: /([^\s]+(\.jpg)$)/})
-  public backgroundImage!: string;
+  public backgroundImagePath!: string;
 
   @prop({required: true})
   public backgroundColor!: string;
+
+  @prop()
+  public isPromo?: boolean;
 }
 
 export const MovieModel = getModelForClass(MovieEntity);
