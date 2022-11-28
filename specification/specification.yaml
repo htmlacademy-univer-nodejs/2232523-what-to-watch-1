@@ -94,7 +94,7 @@ paths:
                 movieId:
                   type: string
                   format: uuid
-                  example: 3422b448-2460-4fd2-9183-8000de6f8343
+                  example: 637b48a7c6f8e71d34702c35
               required:
                 - movieId
         required: true
@@ -252,12 +252,12 @@ paths:
                 userId:
                   type: string
                   format: uuid
-                  example: ex0mpleus0rid
+                  example: 637f8166e38b0c2e35e98d92
 
                 movieId:
                   type: string
                   format: uuid
-                  example: ex0mplem0vieid
+                  example: 637f8166e38b0c2e35e98d94
 
               required:
                 - userId
@@ -287,12 +287,12 @@ paths:
                 userId:
                   type: string
                   format: uuid
-                  example: ex0mpleus0rid
+                  example: 637f8166e38b0c2e35e98d92
 
                 movieId:
                   type: string
                   format: uuid
-                  example: ex0mplem0vieid
+                  example: 637f8166e38b0c2e35e98d94
 
               required:
                 - userId
@@ -353,7 +353,7 @@ paths:
                     movieId:
                       type: string
                       format: uuid
-                      example: ex0mplem0vieid
+                      example: 637f8166e38b0c2e35e98d94
                   required:
                     - movieId
 
@@ -375,7 +375,7 @@ paths:
           description: Фильма с таким id не существует.
 
 
-  /users:
+  /users/register:
     post:
       tags:
         - users
@@ -398,7 +398,7 @@ paths:
                 $ref: '#/components/schemas/user'
 
         "409":
-          description: Пользователь с таким email уже существует.
+          description: Пользователь с таким email "email" уже существует.
 
 
   /users/login:
@@ -573,7 +573,7 @@ components:
         userId:
           type: string
           format: uuid
-          example: 3422b448-2460-4fd2-9183-8000de6f8343
+          example: 637f8166e38b0c2e35e98d94
 
         posterPath:
           type: string
