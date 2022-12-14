@@ -19,6 +19,7 @@ export default class Application {
     @inject(Component.MovieController) private movieController: ControllerInterface,
     @inject(Component.ExceptionFilterInterface) private exceptionFilter: ExceptionFilterInterface,
     @inject(Component.UserController) private userController: ControllerInterface,
+    @inject(Component.CommentController) private commentController: ControllerInterface,
   ) {
     this.expressApp = express();
   }
@@ -26,10 +27,12 @@ export default class Application {
   initRoutes() {
     this.expressApp.use('/movies', this.movieController.router);
     this.expressApp.use('/users', this.userController.router);
+    this.expressApp.use('/comments', this.commentController.router);
   }
 
   initMiddleware() {
     this.expressApp.use(express.json());
+    this.expressApp.use('/upload', express.static(this.config.get('UPLOAD_DIRECTORY')));
   }
 
   initExceptionFilters() {
@@ -37,8 +40,9 @@ export default class Application {
   }
 
   public async init() {
+    const port = this.config.get('PORT');
     this.logger.info('Application initialization...');
-    this.logger.info(`Get value from env $PORT: ${this.config.get('PORT')}`);
+    this.logger.info(`Get value from env $PORT: ${port}`);
 
     const uri = getURI(
       this.config.get('DB_USER'),
@@ -53,7 +57,6 @@ export default class Application {
     this.initMiddleware();
     this.initRoutes();
     this.initExceptionFilters();
-    this.expressApp.listen(this.config.get('PORT'));
-    this.logger.info(`Server started on http://localhost:${this.config.get('PORT')}`);
+    this.expressApp.listen(port, () => this.logger.info(`Server started on http://localhost:${port}`));
   }
 }
