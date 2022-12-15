@@ -7,6 +7,7 @@ import {ConfigInterface} from './common/config/config.interface.js';
 import ConfigService from './common/config/config.service.js';
 import {types} from '@typegoose/typegoose';
 import Application from './app/application.js';
+import CommentController from './modules/comment/comment.controller.js';
 import { DatabaseInterface } from './common/database-client/database.interface.js';
 import DatabaseService from './common/database-client/database.service.js';
 import { UserServiceInterface } from './modules/user/user-service.interface.js';
@@ -38,6 +39,7 @@ applicationContainer.bind<types.ModelType<CommentEntity>>(Component.CommentModel
 applicationContainer.bind<ControllerInterface>(Component.MovieController).to(MovieController).inSingletonScope();
 applicationContainer.bind<ExceptionFilterInterface>(Component.ExceptionFilterInterface).to(ExceptionFilter).inSingletonScope();
 applicationContainer.bind<ControllerInterface>(Component.UserController).to(UserController).inSingletonScope();
+applicationContainer.bind<ControllerInterface>(Component.CommentController).to(CommentController).inSingletonScope();
 
 const application = applicationContainer.get<Application>(Component.Application);
 await application.init();
