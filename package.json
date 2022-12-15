@@ -21,9 +21,9 @@
   "devDependencies": {
     "@types/convict": "6.1.1",
     "@types/convict-format-with-validator": "6.0.2",
-    "@types/express": "^4.17.15",
-    "@types/mime-types": "^2.1.1",
-    "@types/multer": "^1.4.7",
+    "@types/express": "4.17.15",
+    "@types/mime-types": "2.1.1",
+    "@types/multer": "1.4.7",
     "@types/node": "16.11.26",
     "@typescript-eslint/eslint-plugin": "5.18.0",
     "@typescript-eslint/parser": "5.18.0",
@@ -37,14 +37,14 @@
   },
   "type": "module",
   "engines": {
-    "node": "^16.13.0",
-    "npm": "^8.1.0"
+    "node": "16.13.0",
+    "npm": "8.1.0"
   },
   "dependencies": {
     "@typegoose/typegoose": "9.12.1",
     "chalk": "5.1.0",
     "class-transformer": "0.5.1",
-    "class-validator": "^0.14.0",
+    "class-validator": "0.14.0",
     "convict": "6.2.3",
     "convict-format-with-validator": "6.2.0",
     "dayjs": "1.11.5",
@@ -55,10 +55,10 @@
     "http-status-codes": "2.2.0",
     "inversify": "6.0.1",
     "json-server": "0.17.0",
-    "mime-types": "^2.1.35",
+    "mime-types": "2.1.35",
     "mongoose": "6.6.5",
-    "multer": "^1.4.5-lts.1",
-    "nanoid": "^4.0.0",
+    "multer": "1.4.5-lts.1",
+    "nanoid": "4.0.0",
     "pino": "8.7.0",
     "reflect-metadata": "0.1.13"
   }

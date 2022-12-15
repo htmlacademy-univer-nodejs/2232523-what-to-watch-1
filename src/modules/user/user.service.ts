@@ -61,7 +61,7 @@ export default class UserService implements UserServiceInterface {
 
   async deleteToWatch(movieId: string, userId: string): Promise<void | null> {
     return this.userModel.findByIdAndUpdate(userId, {
-      $pull: {moviesToWatch: movieId}
+      $addToSet: {moviesToWatch: movieId}
     });
   }
 }
