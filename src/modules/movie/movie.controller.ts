@@ -3,14 +3,16 @@ import { StatusCodes } from 'http-status-codes';
 import { inject, injectable } from 'inversify';
 import { fillDTO } from '../../utils/common.js';
 import * as core from 'express-serve-static-core';
+import { Genre } from '../../types/genre.type.js';
 import UpdateMovieDto from './dto/update-movie.dto.js';
 import CreateMovieDto from './dto/create-movie.dto.js';
 import {Component } from '../../types/component.type.js';
 import MovieResponse from './response/movie.response.js';
 import HttpError from '../../common/errors/http-error.js';
+import MovieListItemDto from './dto/movie-list-item.dto.js';
 import { HttpMethod } from '../../types/http-method.enum.js';
 import { Controller } from '../../common/controller/controller.js';
-import  {MovieServiceInterface } from './movie-service.interface.js';
+import { MovieServiceInterface } from './movie-service.interface.js';
 import CommentResponse from '../comment/response/comment.response.js';
 import { LoggerInterface } from '../../common/logger/logger.interface.js';
 import { CommentServiceInterface } from '../comment/comment-service.interface.js';
@@ -78,10 +80,13 @@ export default class MovieController extends Controller {
     });
   }
 
-  async index(_req: Request, res: Response): Promise<void> {
-    const movies = await this.movieService.find();
-    const movieResponse = fillDTO(MovieResponse, movies);
-    this.ok(res, movieResponse);
+  async index(req: Request<Record<string, unknown>, Record<string, unknown>, Record<string, unknown>, {genre?: Genre, limit?: number}>,
+    res: Response
+  ): Promise<void> {
+    const movies = req.query.genre
+      ? await this.movieService.findByGenre(req.query.genre, req.query.limit)
+      : await this.movieService.find(req.query.limit);
+    this.ok(res, fillDTO(MovieListItemDto, movies));
   }
 
   async create({body}: Request<Record<string, unknown>, Record<string, unknown>, CreateMovieDto>, res: Response): Promise<void> {
