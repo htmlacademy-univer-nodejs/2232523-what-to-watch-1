@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import { inject, injectable } from 'inversify';
 import { fillDTO } from '../../utils/common.js';
 import * as core from 'express-serve-static-core';
-import UpdateMovieDto from './dto/update-movie.dto';
+import UpdateMovieDto from './dto/update-movie.dto.js';
 import CreateMovieDto from './dto/create-movie.dto.js';
 import {Component } from '../../types/component.type.js';
 import MovieResponse from './response/movie.response.js';
@@ -14,7 +14,7 @@ import  {MovieServiceInterface } from './movie-service.interface.js';
 import CommentResponse from '../comment/response/comment.response.js';
 import { LoggerInterface } from '../../common/logger/logger.interface.js';
 import { CommentServiceInterface } from '../comment/comment-service.interface.js';
-import { DocumentExistsMiddleware } from '../../common/middlewares/document-exists.middleware';
+import { DocumentExistsMiddleware } from '../../common/middlewares/document-exists.middleware.js';
 import { ValidateDtoMiddleware } from '../../common/middlewares/validate-dto.middleware.js';
 import { ValidateObjectIdMiddleware } from '../../common/middlewares/validate-objectid.middleware.js';
 

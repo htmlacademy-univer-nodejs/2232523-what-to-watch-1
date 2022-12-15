@@ -15,7 +15,7 @@ import { fillDTO } from '../../utils/common.js';
 import MovieResponse from '../movie/response/movie.response.js';
 import { ValidateDtoMiddleware } from '../../common/middlewares/validate-dto.middleware.js';
 import { ValidateObjectIdMiddleware } from '../../common/middlewares/validate-objectid.middleware.js';
-import { UploadFileMiddleware } from '../../common/middlewares/upload-file.middleware';
+import { UploadFileMiddleware } from '../../common/middlewares/upload-file.middleware.js';
 
 @injectable()
 export default class UserController extends Controller {

@@ -5,7 +5,7 @@ export default class CreateUserDto {
   public email!: string ;
 
   @IsString({message: 'Путь до аватара должен быть строкой'})
-  @Matches(/[^\\s]+(.*?)\\.(jpg|png)$/, {message: 'Путь до аватара должен иметь разрешение .jpg или .png'})
+  @Matches(/[^\\s]+\.(jpg|png)$/, {message: 'Путь до аватара должен иметь разрешение .jpg или .png'})
   public avatarPath?: string;
 
   @IsString({message: 'Имя должно быть строкой'})

@@ -1,53 +1,53 @@
-import { Genre, GenreEnum } from '../../../types/genre.type';
+import { Genre, GenreEnum } from '../../../types/genre.type.js';
 import { IsNumber, IsArray, IsDateString, IsEnum, IsInt, IsMongoId, IsString, Length, Matches, Min } from 'class-validator';
 
 export default class CreateMovieDto {
   @Length(2, 100, {message: 'Название фильма обязано иметь длину от 2 до 100 символов'})
-  title!: string;
+    title!: string;
 
   @Length(20, 1024, {message: 'Описание фильма обязано иметь длину от 20 до 1024 символов'})
-  description!: string;
+    description!: string;
 
   @IsDateString({}, {message: 'Дата публикации должна быть валидной по стандарту ISO'})
-  publishingDate!: Date;
+    publishingDate!: Date;
 
   @IsEnum(GenreEnum, {message: 'Жанр должен быть одним из: \'comedy\', \'crime\', \'documentary\', \'drama\', \'horror\', \'family\', \'romance\', \'scifi\', \'thriller\''})
-  genre!: Genre;
+    genre!: Genre;
 
   @IsInt({message: 'Год выхода должен быть числом'})
-  releaseYear!: number;
+    releaseYear!: number;
 
   @IsNumber({},{message: 'Рейтинг должен быть числом'})
-  rating!: number;
+    rating!: number;
 
   @IsString({message: 'Путь превью должен быть строкой'})
-  previewPath!: string;
+    previewPath!: string;
 
   @IsString({message: 'Путь фильма должен быть строкой'})
-  moviePath!: string;
+    moviePath!: string;
 
   @IsArray({message: 'Поле "актеры" должно быть массивом'})
-  actors!: string[];
+    actors!: string[];
 
   @IsString({message: 'Имя режиссёра должно быть строкой'})
   @Length(2, 50, {message: 'Минимальное имя режиссера -- 2 символа, максимальное -- 50'})
-  director!: string;
+    director!: string;
 
   @IsInt({message: 'Продолжительность фильма должна быть числом'})
   @Min(0, {message: 'Продолжительность фильма не должна быть меньше 0'})
-  durationInMinutes!: number;
+    durationInMinutes!: number;
 
   @IsMongoId({message: 'ID пользователя должен быть валидным'})
-  userId!: string;
+    userId!: string;
 
   @IsString({message: 'Путь постера должен быть строкой'})
   @Matches(/(\S+(\.jpg)$)/, {message: 'Разрешение постера -- .jpg'})
-  posterPath!: string;
+    posterPath!: string;
 
   @IsString({message: 'Путь бэкграунда должен быть строкой'})
   @Matches(/(\S+(\.jpg)$)/, {message: 'Разрешение бэкграунда -- .jpg'})
-  backgroundImagePath!: string;
+    backgroundImagePath!: string;
 
   @IsString({message: 'Цвет бэкграунда должен быть строкой'})
-  backgroundColor!: string;
+    backgroundColor!: string;
 }

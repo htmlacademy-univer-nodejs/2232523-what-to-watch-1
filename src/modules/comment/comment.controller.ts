@@ -11,7 +11,7 @@ import { Controller } from '../../common/controller/controller.js';
 import { CommentServiceInterface } from './comment-service.interface.js';
 import { LoggerInterface } from '../../common/logger/logger.interface.js';
 import { MovieServiceInterface } from '../movie/movie-service.interface.js';
-import { ValidateDtoMiddleware } from '../../common/middlewares/validate-dto.middleware';
+import { ValidateDtoMiddleware } from '../../common/middlewares/validate-dto.middleware.js';
 
 export default class CommentController extends Controller {
   constructor(@inject(Component.LoggerInterface) logger: LoggerInterface,
