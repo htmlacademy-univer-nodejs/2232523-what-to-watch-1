@@ -16,8 +16,9 @@ import { MovieServiceInterface } from './movie-service.interface.js';
 import CommentResponse from '../comment/response/comment.response.js';
 import { LoggerInterface } from '../../common/logger/logger.interface.js';
 import { CommentServiceInterface } from '../comment/comment-service.interface.js';
-import { DocumentExistsMiddleware } from '../../common/middlewares/document-exists.middleware.js';
+import { PrivateRouteMiddleware } from '../../common/middlewares/private-route.middleware.js';
 import { ValidateDtoMiddleware } from '../../common/middlewares/validate-dto.middleware.js';
+import { DocumentExistsMiddleware } from '../../common/middlewares/document-exists.middleware.js';
 import { ValidateObjectIdMiddleware } from '../../common/middlewares/validate-objectid.middleware.js';
 
 type ParamsGetMovie = {
@@ -34,11 +35,15 @@ export default class MovieController extends Controller {
     this.logger.info('Register routes for MovieController.');
 
     this.addRoute({path: '/', method: HttpMethod.Get, handler: this.index});
+    this.addRoute({path: '/promo', method: HttpMethod.Get, handler: this.showPromo});
     this.addRoute({
       path: '/create',
       method: HttpMethod.Post,
       handler: this.create,
-      middlewares: [new ValidateDtoMiddleware(CreateMovieDto)]
+      middlewares: [
+        new PrivateRouteMiddleware(),
+        new ValidateDtoMiddleware(CreateMovieDto)
+      ]
     });
     this.addRoute({
       path: '/:movieId',
@@ -54,6 +59,7 @@ export default class MovieController extends Controller {
       method: HttpMethod.Patch,
       handler: this.updateFilm,
       middlewares: [
+        new PrivateRouteMiddleware(),
         new ValidateObjectIdMiddleware('movieId'),
         new ValidateDtoMiddleware(UpdateMovieDto),
         new DocumentExistsMiddleware(this.movieService, 'Movie', 'movieId')
@@ -64,6 +70,7 @@ export default class MovieController extends Controller {
       method: HttpMethod.Delete,
       handler: this.deleteFilm,
       middlewares: [
+        new PrivateRouteMiddleware(),
         new ValidateObjectIdMiddleware('movieId'),
         new DocumentExistsMiddleware(this.movieService, 'Movie', 'movieId')
       ]
@@ -89,9 +96,11 @@ export default class MovieController extends Controller {
     this.ok(res, fillDTO(MovieListItemDto, movies));
   }
 
-  async create({body}: Request<Record<string, unknown>, Record<string, unknown>, CreateMovieDto>, res: Response): Promise<void> {
-    const result = await this.movieService.create(body);
-    this.created(res, fillDTO(MovieResponse, result));
+  async create(req: Request<Record<string, unknown>, Record<string, unknown>, CreateMovieDto>, res: Response): Promise<void> {
+    const { body, user } = req;
+    const result = await this.movieService.create({...body, userId: user.id});
+    const movie = await this.movieService.findById(result.id);
+    this.created(res, fillDTO(MovieResponse, movie));
   }
 
   async show({params}: Request<core.ParamsDictionary | ParamsGetMovie>, res: Response): Promise<void> {
@@ -99,22 +108,40 @@ export default class MovieController extends Controller {
     this.ok(res, fillDTO(MovieResponse, result));
   }
 
-  async updateFilm({params, body}: Request<Record<string, string>, Record<string, unknown>, UpdateMovieDto>, res: Response): Promise<void> {
+  async updateFilm({params, body, user}: Request<Record<string, string>, Record<string, unknown>, UpdateMovieDto>, res: Response): Promise<void> {
     const film = await this.movieService.findById(params.movieId);
 
     if (!film) {
       throw new HttpError(StatusCodes.NOT_FOUND, `Фильма с id «${params.movieId}» не существует.`, 'MovieController');
     }
 
+    const movie = await this.movieService.findById(params.movieId);
+    if (movie?.userId?.id !== user.id) {
+      throw new HttpError(
+        StatusCodes.FORBIDDEN,
+        `Пользователь с id ${user.id} не владеет картой с id ${movie?.id}, поэтому не может её редактировать.`,
+        'MovieController'
+      );
+    }
+
     const result = await this.movieService.updateById(params.movieId, body);
     this.ok(res, fillDTO(MovieResponse, result));
   }
 
-  async deleteFilm({params}: Request<Record<string, string>>, res: Response): Promise<void> {
+  async deleteFilm({params, user}: Request<Record<string, string>>, res: Response): Promise<void> {
     const film = await this.movieService.findById(`${params.movieId}`);
 
     if (!film) {
       throw new HttpError(StatusCodes.NOT_FOUND, `Фильма с id «${params.movieId}» не существует.`, 'MovieController');
+    }
+
+    const movie = await this.movieService.findById(params.movieId);
+    if (movie?.userId?.id !== user.id) {
+      throw new HttpError(
+        StatusCodes.FORBIDDEN,
+        `Пользователь с id ${user.id} не владеет картой с id ${movie?.id}, поэтому не может её удалить.`,
+        'MovieController'
+      );
     }
 
     await this.movieService.deleteById(`${params.movieId}`);
@@ -129,5 +156,10 @@ export default class MovieController extends Controller {
   async getComments({params}: Request<core.ParamsDictionary | ParamsGetMovie>, res: Response): Promise<void> {
     const comments = await this.commentService.findByMovieId(params.movieId);
     this.ok(res, fillDTO(CommentResponse, comments));
+  }
+
+  async showPromo(_: Request, res: Response): Promise<void> {
+    const result = await this.movieService.findPromo();
+    this.ok(res, fillDTO(MovieResponse, result));
   }
 }

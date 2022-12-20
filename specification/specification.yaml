@@ -135,11 +135,6 @@ paths:
             schema:
               type: object
 
-              properties:
-                userId:
-                  type: string
-                  format: uuid
-
       responses:
         "204":
           description: Фильм был успешно удален.
@@ -214,14 +209,6 @@ paths:
             schema:
               type: object
 
-              properties:
-                userId:
-                  type: string
-                  format: uuid
-
-              required:
-                - userId
-
       responses:
         "200":
           description: Успешно. Фильмы, добавленные к просмотру.
@@ -242,25 +229,19 @@ paths:
       description: Добавляет фильм в список "К просмотру"
 
       requestBody:
-        description: Id пользователя, который добавляет фильм + id фильма, который добавляют в список.
+        description: Id фильма, который добавляют в список "К просмотру".
         content:
           application/json:
             schema:
               type: object
 
               properties:
-                userId:
-                  type: string
-                  format: uuid
-                  example: 637f8166e38b0c2e35e98d92
-
                 movieId:
                   type: string
                   format: uuid
                   example: 637f8166e38b0c2e35e98d94
 
               required:
-                - userId
                 - movieId
 
       responses:
@@ -458,27 +439,6 @@ paths:
                 $ref: '#/components/schemas/user'
 
 
-  /users/logout:
-    delete:
-      tags:
-        - users
-      description: Завершение сеанса.
-
-      parameters:
-        - in: cookie
-          name: SESSIONID
-          required: true
-          schema:
-            type: string
-
-      responses:
-        "204":
-          description: Вы успешно вышли из системы.
-
-        "403":
-          description: Неверный токен. Нельзя завершить сеанс.
-
-
 components:
   schemas:
     createUser:
@@ -570,11 +530,6 @@ components:
           type: number
           minimum: 1
 
-        userId:
-          type: string
-          format: uuid
-          example: 637f8166e38b0c2e35e98d94
-
         posterPath:
           type: string
           format: uri
@@ -600,7 +555,6 @@ components:
         - actors
         - director
         - durationInMinutes
-        - userId
         - posterPath
         - backgroundImagePath
         - backgroundColor

@@ -1,5 +1,5 @@
-import {NextFunction, Request, Response} from 'express';
+import {NextFunction, Response} from 'express';
 
 export interface ExceptionFilterInterface {
-  catch(error: Error, req: Request, res: Response, next: NextFunction): void;
+  catch(error: Error, res: Response, next: NextFunction): void;
 }
