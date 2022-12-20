@@ -37,7 +37,7 @@ export default class CreateMovieDto {
   @Min(0, {message: 'Продолжительность фильма не должна быть меньше 0'})
     durationInMinutes!: number;
 
-    userId!: string;
+  userId!: string;
 
   @IsString({message: 'Путь постера должен быть строкой'})
   @Matches(/(\S+(\.jpg)$)/, {message: 'Разрешение постера -- .jpg'})

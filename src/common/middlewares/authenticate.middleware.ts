@@ -13,7 +13,7 @@ export class AuthenticateMiddleware implements MiddlewareInterface {
     if (!authorizationHeader) {
       return next();
     }
-    req
+    req;
 
     const [, token] = authorizationHeader;
 
@@ -33,7 +33,7 @@ export class AuthenticateMiddleware implements MiddlewareInterface {
 
       return next(new HttpError(
         StatusCodes.UNAUTHORIZED,
-        'Invalid token',
+        'Неверный токен',
         'AuthenticateMiddleware')
       );
     }
