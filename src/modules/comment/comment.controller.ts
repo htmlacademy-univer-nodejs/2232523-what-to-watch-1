@@ -11,6 +11,7 @@ import { Controller } from '../../common/controller/controller.js';
 import { CommentServiceInterface } from './comment-service.interface.js';
 import { LoggerInterface } from '../../common/logger/logger.interface.js';
 import { MovieServiceInterface } from '../movie/movie-service.interface.js';
+import {PrivateRouteMiddleware} from '../../common/middlewares/private-route.middleware.js';
 import { ValidateDtoMiddleware } from '../../common/middlewares/validate-dto.middleware.js';
 
 export default class CommentController extends Controller {
@@ -24,11 +25,16 @@ export default class CommentController extends Controller {
       path: '/',
       method: HttpMethod.Post,
       handler: this.create,
-      middlewares: [new ValidateDtoMiddleware(CreateCommentDto)]
+      middlewares: [
+        new PrivateRouteMiddleware(),
+        new ValidateDtoMiddleware(CreateCommentDto)
+      ]
     });
   }
 
-  public async create({body}: Request<object, object, CreateCommentDto>, res: Response): Promise<void> {
+  public async create(req: Request<object, object, CreateCommentDto>, res: Response): Promise<void> {
+    const {body, user} = req;
+
     if (!await this.movieService.exists(body.movieId)) {
       throw new HttpError(
         StatusCodes.NOT_FOUND,
@@ -37,7 +43,7 @@ export default class CommentController extends Controller {
       );
     }
 
-    const comment = await this.commentService.create(body);
+    const comment = await this.commentService.create({...body, userId: user.id});
     await this.movieService.updateMovieRating(body.movieId, body.rating);
     this.created(res, fillDTO(CommentResponse, comment));
   }

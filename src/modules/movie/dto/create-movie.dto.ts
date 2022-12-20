@@ -1,5 +1,5 @@
 import { Genre, GenreEnum } from '../../../types/genre.type.js';
-import { IsNumber, IsArray, IsDateString, IsEnum, IsInt, IsMongoId, IsString, Length, Matches, Min } from 'class-validator';
+import { IsNumber, IsArray, IsDateString, IsEnum, IsInt, IsString, Length, Matches, Min } from 'class-validator';
 
 export default class CreateMovieDto {
   @Length(2, 100, {message: 'Название фильма обязано иметь длину от 2 до 100 символов'})
@@ -37,7 +37,6 @@ export default class CreateMovieDto {
   @Min(0, {message: 'Продолжительность фильма не должна быть меньше 0'})
     durationInMinutes!: number;
 
-  @IsMongoId({message: 'ID пользователя должен быть валидным'})
     userId!: string;
 
   @IsString({message: 'Путь постера должен быть строкой'})

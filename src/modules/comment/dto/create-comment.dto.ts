@@ -13,6 +13,5 @@ export default class CreateCommentDto {
   @IsMongoId({message: 'ID фильма должен быть валидным'})
   public movieId!: string;
 
-  @IsMongoId({message: 'ID пользователя должен быть валидным'})
   public userId!: string;
 }
