@@ -13,8 +13,6 @@ export class AuthenticateMiddleware implements MiddlewareInterface {
     if (!authorizationHeader) {
       return next();
     }
-    req;
-
     const [, token] = authorizationHeader;
 
     try {
