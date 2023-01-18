@@ -51,7 +51,7 @@ export default class MovieResponse {
 
   @Expose()
   public backgroundColor!: string;
-  
+
   @Expose()
   public commentsCount!: number;
 }

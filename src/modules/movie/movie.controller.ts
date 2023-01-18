@@ -97,11 +97,11 @@ export default class MovieController extends Controller {
     });
   }
 
-  
+
   async index(req: Request<unknown, unknown, unknown, QueryParamsGetMovies>, res: Response): Promise<void> {
     const genre = req.query.genre;
     const limit = req.query.limit ? parseInt(req.query.limit, 10) : undefined;
-    let movies = genre ? await this.movieService.findByGenre(checkGenre(genre), limit) : await this.movieService.find(limit);
+    const movies = genre ? await this.movieService.findByGenre(checkGenre(genre), limit) : await this.movieService.find(limit);
     this.ok(res, fillDTO(MovieListItemDto, movies));
   }
 
