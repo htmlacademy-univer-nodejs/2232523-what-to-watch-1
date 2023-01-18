@@ -10,7 +10,7 @@ import { UserServiceInterface } from '../modules/user/user-service.interface.js'
 import { UserModel } from '../modules/user/user.entity.js';
 import UserService from '../modules/user/user.service.js';
 import { Movie } from '../types/movie.type.js';
-import { createMovie, getErrorMessage } from '../utils/common.js';
+import { createMovie } from '../utils/common.js';
 import { getURI } from '../utils/db.js';
 import { CliCommandInterface } from './cli-command.interface.js';
 import {ConfigInterface} from '../common/config/config.interface.js';
@@ -44,10 +44,7 @@ export default class ImportCommand implements CliCommandInterface {
       password: process.env.DB_PASSWORD || DEFAULT_USER_PASSWORD
     }, this.salt);
 
-    await this.movieService.create({
-      ...movie,
-      userId: user.id,
-    });
+    await this.movieService.create(movie, user.id);
   }
 
   private async onLine(line: string, resolve: () => void) {
@@ -81,7 +78,9 @@ export default class ImportCommand implements CliCommandInterface {
     try {
       await fileReader.read();
     } catch (err) {
-      console.log(`Can't read the file: ${getErrorMessage(err)}`);
+      if (err instanceof Error) {
+        this.logger.error(`Can't read the file: ${err.message}`);
+      }
     }
   }
 }

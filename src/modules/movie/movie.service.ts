@@ -6,6 +6,7 @@ import {MovieEntity} from './movie.entity.js';
 import {Component} from '../../types/component.type.js';
 import {LoggerInterface} from '../../common/logger/logger.interface.js';
 import UpdateMovieDto from './dto/update-movie.dto.js';
+import { Genre } from '../../types/genre.type.js';
 
 @injectable()
 export default class MovieService implements MovieServiceInterface {
@@ -14,42 +15,46 @@ export default class MovieService implements MovieServiceInterface {
     @inject(Component.MovieModel) private readonly movieModel: types.ModelType<MovieEntity>
   ) {}
 
-  async create(dto: CreateMovieDto): Promise<DocumentType<MovieEntity>> {
-    const movie = await this.movieModel.create(dto);
-    this.logger.info(`New movie created: ${dto.title}`);
-
+  async create(dto: CreateMovieDto, user: string): Promise<DocumentType<MovieEntity>> {
+    const movie = await this.movieModel.create({...dto, user});
+    this.logger.info(`Новый фильм создан: ${dto.title}`);
     return movie;
   }
 
-  async findById(movieId: string): Promise<DocumentType<MovieEntity> | null> {
-    return this.movieModel.findById(movieId).populate('userId');
+  async findMovieById(movieId: string): Promise<DocumentType<MovieEntity> | null> {
+    return this.movieModel.findById(movieId).populate('user');
   }
 
   async find(limit?: number): Promise<DocumentType<MovieEntity>[]> {
-    return this.movieModel.aggregate([
-      {
-        $addFields: {
-          id: {$toString: '$_id'}
-        }
-      },
+    const movies = await this.movieModel.aggregate([
+      {$addFields: {id: {$toString: '$_id'}}},
+      {$sort: {publishingDate: 1}},
       {$limit: limit || 60}
     ]);
+    return this.movieModel.populate(movies, 'user');
   }
 
-  async updateById(movieId: string, dto: UpdateMovieDto): Promise<DocumentType<MovieEntity> | null> {
-    return this.movieModel.findByIdAndUpdate(movieId, dto).populate('userId');
+  async updateMovieById(movieId: string, dto: UpdateMovieDto): Promise<DocumentType<MovieEntity> | null> {
+    return this.movieModel.findByIdAndUpdate(movieId, dto, {new: true}).populate('user');
   }
 
-  async deleteById(movieId: string): Promise<void | null> {
+  async deleteMovieById(movieId: string): Promise<void | null> {
     return this.movieModel.findByIdAndDelete(movieId);
   }
 
-  async findByGenre(genre: string, limit?: number): Promise<DocumentType<MovieEntity>[]> {
-    return this.movieModel.find({genre}, {}, {limit}).populate('userId');
+  async findByGenre(genre: Genre, limit?: number): Promise<DocumentType<MovieEntity>[]> {
+    const movies = await this.movieModel.aggregate([
+      {$match: {genre}},
+      {$addFields: {id: {$toString: '$_id'}}},
+      {$sort: {publishingDate: 1}},
+      {$limit: limit || 60}
+    ]);
+    const res = this.movieModel.populate(movies, 'user');
+    return res;
   }
 
   async findPromo(): Promise<DocumentType<MovieEntity> | null> {
-    return this.movieModel.findOne({isPromo: true}).populate('userId');
+    return this.movieModel.findOne({isPromo: true}).populate('user');
   }
 
   async incCommentsCount(movieId: string): Promise<void | null> {
@@ -66,6 +71,6 @@ export default class MovieService implements MovieServiceInterface {
   }
 
   async exists(documentId: string): Promise<boolean> {
-    return (this.movieModel.exists({_id: documentId})) !== null;
+    return (await this.movieModel.exists({_id: documentId})) !== null;
   }
 }

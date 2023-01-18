@@ -7,10 +7,12 @@ import CreateUserDto from './dto/create-user.dto.js';
 
 export interface UserServiceInterface {
   create(dto: CreateUserDto, salt: string): Promise<DocumentType<UserEntity>>;
-  findByEmail(email: string): Promise<DocumentType<UserEntity> | null>;
+  findUserById(userId: string): Promise<DocumentType<UserEntity> | null>;
+  findUserByEmail(email: string): Promise<DocumentType<UserEntity> | null>;
   findOrCreate(dto: CreateUserDto, salt: string): Promise<DocumentType<UserEntity>>;
   findToWatch(userId: string): Promise<DocumentType<MovieEntity>[]>;
   addToWatch(movieId: string, userId: string): Promise<void | null>;
   deleteToWatch(movieId: string, userId: string): Promise<void | null>;
   verifyUser(dto: LoginUserDto, salt: string): Promise<DocumentType<UserEntity> | null>;
+  setUserAvatarPath(userId: string, avatarPath: string): Promise<void | null>;
 }

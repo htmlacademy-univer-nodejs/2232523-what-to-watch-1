@@ -1,12 +1,12 @@
 import 'reflect-metadata';
+import { getURI } from '../utils/db.js';
+import express, {Express} from 'express';
 import { inject, injectable } from 'inversify';
+import { Component } from '../types/component.type.js';
 import { LoggerInterface } from '../common/logger/logger.interface.js';
 import { ConfigInterface } from '../common/config/config.interface.js';
-import { Component } from '../types/component.type.js';
-import { getURI } from '../utils/db.js';
-import { DatabaseInterface } from '../common/database-client/database.interface.js';
-import express, {Express} from 'express';
 import { ControllerInterface } from '../common/controller/controller.interface';
+import { DatabaseInterface } from '../common/database-client/database.interface.js';
 import { ExceptionFilterInterface } from '../common/errors/exception-filter.interface';
 import { AuthenticateMiddleware } from '../common/middlewares/authenticate.middleware.js';
 
@@ -34,6 +34,7 @@ export default class Application {
   initMiddleware() {
     this.expressApp.use(express.json());
     this.expressApp.use('/upload', express.static(this.config.get('UPLOAD_DIRECTORY')));
+    this.expressApp.use('/static', express.static(this.config.get('STATIC_DIRECTORY_PATH')));
 
     const authenticateMiddleware = new AuthenticateMiddleware(this.config.get('JWT_SECRET'));
     this.expressApp.use(authenticateMiddleware.execute.bind(authenticateMiddleware));
@@ -61,6 +62,6 @@ export default class Application {
     this.initMiddleware();
     this.initRoutes();
     this.initExceptionFilters();
-    this.expressApp.listen(port, () => this.logger.info(`Server started on http://localhost:${port}`));
+    this.expressApp.listen(port, () => this.logger.info(`Server started on http://${this.config.get('HOST')}:${port}`));
   }
 }
