@@ -50,7 +50,6 @@ export default class MovieService implements MovieServiceInterface {
       {$limit: limit || 60}
     ]);
     const res = this.movieModel.populate(movies, 'user');
-    console.log(Object.values(await res));
     return res;
   }
 
