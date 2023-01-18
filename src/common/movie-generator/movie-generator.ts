@@ -1,8 +1,8 @@
-import {MockData} from '../../types/mock-data.type.js';
-import {getRandomItem, getRandomItems, generateRandomValue} from '../../utils/random.js';
-import {GENRE} from '../../types/genre.type.js';
 import dayjs from 'dayjs';
-import {MovieGeneratorInterface} from './movie-generator.interface';
+import { GENRE } from '../../types/genre.type.js';
+import { MockData } from '../../types/mock-data.type.js';
+import { MovieGeneratorInterface } from './movie-generator.interface';
+import { getRandomItem, getRandomItems, generateRandomValue } from '../../utils/random.js';
 
 const MAX_RELEASE_YEAR = 2022;
 const MIN_RELEASE_YEAR = 1990;
@@ -30,7 +30,6 @@ export default class MovieGenerator implements MovieGeneratorInterface {
     const durationInMinutes = generateRandomValue(MIN_DURATION, MAX_DURATION);
     const userName = getRandomItem<string>(this.mockData.users);
     const email = getRandomItem<string>(this.mockData.emails);
-    const avatar = getRandomItem<string>(this.mockData.avatars);
     const posterPath = getRandomItem<string>(this.mockData.posterPathes);
     const backgroundImagePath = getRandomItem<string>(this.mockData.backgroundImagePathes);
     const backgroundColor = getRandomItem<string>(this.mockData.backgroundColors);
@@ -49,7 +48,6 @@ export default class MovieGenerator implements MovieGeneratorInterface {
       durationInMinutes,
       userName,
       email,
-      avatar,
       posterPath,
       backgroundImagePath,
       backgroundColor

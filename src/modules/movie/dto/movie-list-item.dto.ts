@@ -1,26 +1,30 @@
-import {Expose} from 'class-transformer';
-import { Genre } from '../../../types/genre.type';
+import { Expose, Type } from 'class-transformer';
+import { Genre } from '../../../types/genre.type.js';
+import UserResponse from '../../user/response/user.response.js';
 
 export default class MovieListItemDto {
+  @Expose()
+  public id!: string;
 
   @Expose()
   public title!: string;
 
   @Expose()
-  public publicationDate!: Date;
+  public publishingDate!: number;
 
   @Expose()
   public genre!: Genre;
 
   @Expose()
-  public videoPreviewUri!: string;
+  public previewPath!: string;
 
   @Expose()
-  public userId!: string;
+  @Type(() => UserResponse)
+  public user!: UserResponse;
 
   @Expose()
-  public posterUri!: string;
+  public posterPath!: string;
 
   @Expose()
-  public commentAmount!: number;
+  public commentsCount!: number;
 }

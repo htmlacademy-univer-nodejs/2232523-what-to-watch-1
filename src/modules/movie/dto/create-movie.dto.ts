@@ -1,5 +1,16 @@
 import { Genre, GenreEnum } from '../../../types/genre.type.js';
-import { IsNumber, IsArray, IsDateString, IsEnum, IsInt, IsString, Length, Matches, Min } from 'class-validator';
+import {
+  IsArray,
+  IsBoolean,
+  IsDateString,
+  IsEnum,
+  IsInt,
+  IsOptional,
+  IsString,
+  Length,
+  Matches,
+  Min
+} from 'class-validator';
 
 export default class CreateMovieDto {
   @Length(2, 100, {message: 'Название фильма обязано иметь длину от 2 до 100 символов'})
@@ -16,9 +27,6 @@ export default class CreateMovieDto {
 
   @IsInt({message: 'Год выхода должен быть числом'})
     releaseYear!: number;
-
-  @IsNumber({},{message: 'Рейтинг должен быть числом'})
-    rating!: number;
 
   @IsString({message: 'Путь превью должен быть строкой'})
     previewPath!: string;
@@ -37,8 +45,6 @@ export default class CreateMovieDto {
   @Min(0, {message: 'Продолжительность фильма не должна быть меньше 0'})
     durationInMinutes!: number;
 
-  userId!: string;
-
   @IsString({message: 'Путь постера должен быть строкой'})
   @Matches(/(\S+(\.jpg)$)/, {message: 'Разрешение постера -- .jpg'})
     posterPath!: string;
@@ -49,4 +55,8 @@ export default class CreateMovieDto {
 
   @IsString({message: 'Цвет бэкграунда должен быть строкой'})
     backgroundColor!: string;
+
+  @IsOptional()
+  @IsBoolean({message: 'isPromo должен быть типа boolean'})
+  public isPromo?: boolean;
 }

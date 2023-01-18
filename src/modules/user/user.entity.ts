@@ -1,6 +1,7 @@
 import {User} from '../../types/user.type.js';
-import typegoose, {getModelForClass, defaultClasses} from '@typegoose/typegoose';
-import {/*checkPassword,*/ createSHA256 } from '../../utils/common.js';
+import { DEFAULT_AVATAR_FILE_NAME } from './user.constant.js';
+import { checkPassword, createSHA256 } from '../../utils/common.js';
+import typegoose, {defaultClasses, getModelForClass} from '@typegoose/typegoose';
 
 const {prop, modelOptions} = typegoose;
 
@@ -11,7 +12,6 @@ export interface UserEntity extends defaultClasses.Base {}
     collection: 'users'
   }
 })
-
 export class UserEntity extends defaultClasses.TimeStamps implements User {
   constructor(data: User) {
     super();
@@ -21,25 +21,24 @@ export class UserEntity extends defaultClasses.TimeStamps implements User {
     this.name = data.name;
   }
 
-  @prop({ unique: true, required: true })
+  @prop({unique: true, required: true})
   public email!: string;
 
-  @prop({required: true, default: ''})
+  @prop({default: DEFAULT_AVATAR_FILE_NAME})
   public avatarPath?: string;
 
-  @prop({required: true, default: ''})
+  @prop({required: true})
   public name!: string;
 
-  @prop({required: true, default: ''})
+  @prop({required: true, default: []})
+  public moviesToWatch!: string[];
+
+  @prop({required: true})
   private password!: string;
 
-  public setPassword(password: string, salt: string) {
-    //checkPassword(password);
+  setPassword(password: string, salt: string) {
+    checkPassword(password);
     this.password = createSHA256(password, salt);
-  }
-
-  public getPassword() {
-    return this.password;
   }
 
   verifyPassword(password: string, salt: string) {

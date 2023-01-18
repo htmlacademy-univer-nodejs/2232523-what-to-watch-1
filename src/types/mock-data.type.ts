@@ -9,7 +9,6 @@ export type MockData = {
   users: string[];
   emails: string[];
   avatars: string[];
-  passwords: string[];
   posterPathes: string[];
   backgroundImagePathes: string[];
   backgroundColors: string[];

@@ -1,3 +1,134 @@
+# Сценарии ТЗ
+###
+## Добавление фильма
+POST http://localhost:4000/movies/create HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImV4YW1wbGVAb3Zlcmxvb2submV0IiwiaWQiOiI2Mzg0NGMzYjQ1MTM4YTExNTQ0YjY1ODIiLCJpYXQiOjE2NzQwMzk3OTAsImV4cCI6MTY3NDIxMjU5MH0.Wg5_ZvlCBLpqrbjD_i2ZXcLeDCWjSqGO74S996GG9Ec
+
+{
+  "title": "aaa",
+  "description": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "publishingDate": "2007-07-13T14:59:48.903Z",
+  "genre": "romance",
+  "releaseYear": 2009,
+  "previewPath": "https://www.what-to-watch.ru/preview/example",
+  "moviePath": "https://www.what-to-watch.ru/example",
+  "actors": ["aaa"],
+  "director": "aaa",
+  "durationInMinutes": 1,
+  "posterPath": "example.jpg",
+  "backgroundImagePath": "background/example.jpg",
+  "backgroundColor": "blue"
+}
+
+###
+## Редактирование карточки фильма
+PATCH http://localhost:4000/movies/63c7d8f5a246613b2a16cc9a HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImV4YW1wbGVAb3Zlcmxvb2submV0IiwiaWQiOiI2Mzg0NGMzYjQ1MTM4YTExNTQ0YjY1ODIiLCJpYXQiOjE2NzM4NzgzNjgsImV4cCI6MTY3NDA1MTE2OH0.LNHz6ZNf0CaiAko9kDV7C62B5Stizii6DLoxHNgY4o4
+
+{
+  "title": "bbbb",
+  "description": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "publishingDate": "2022-10-22T22:55:33.903Z",
+  "genre": "drama",
+  "releaseYear": 1999,
+  "previewPath": "https://www.what-to-watch.ru/example2_preview",
+  "moviePath": "https://www.what-to-watch.ru/example2",
+  "actors": [],
+  "director": "bbb",
+  "durationInMinutes": 100,
+  "posterPath": "example2.jpg",
+  "backgroundImagePath": "example2.jpg",
+  "backgroundColor": "red",
+  "isPromo": true
+}
+
+###
+## Удаление карточки фильма
+DELETE http://localhost:4000/movies/63c532d57a4b5548469edaf3 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImV4YW1wbGVAb3Zlcmxvb2submV0IiwiaWQiOiI2Mzg0NGMzYjQ1MTM4YTExNTQ0YjY1ODIiLCJpYXQiOjE2NzM4NzgzNjgsImV4cCI6MTY3NDA1MTE2OH0.LNHz6ZNf0CaiAko9kDV7C62B5Stizii6DLoxHNgY4o4
+
+###
+## Получить список фильмов
+GET http://localhost:4000/movies?limit=2 HTTP/1.1
+Accept: application/json
+
+###
+## Получение списка фильмов определённого жанра
+GET http://localhost:4000/movies?genre=romance HTTP/1.1
+Accept: application/json
+
+###
+## Получение детальной информации по фильму
+GET http://localhost:4000/movies/63c538edb63bcb91137d46c2 HTTP/1.1
+Accept: application/json
+
+###
+## Получение промо-фильма
+GET http://localhost:4000/movies/promo HTTP/1.1
+Accept: application/json
+
+###
+## Получить список фильмов «К просмотру»
+GET http://localhost:4000/users/favourites HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImV4YW1wbGVAb3Zlcmxvb2submV0IiwiaWQiOiI2Mzg0NGMzYjQ1MTM4YTExNTQ0YjY1ODIiLCJpYXQiOjE2NzM4NzgzNjgsImV4cCI6MTY3NDA1MTE2OH0.LNHz6ZNf0CaiAko9kDV7C62B5Stizii6DLoxHNgY4o4
+
+###
+## Добавить фильм в список «К просмотру»
+POST http://localhost:4000/users/favourites HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImV4YW1wbGVAb3Zlcmxvb2submV0IiwiaWQiOiI2Mzg0NGMzYjQ1MTM4YTExNTQ0YjY1ODIiLCJpYXQiOjE2NzM4NzgzNjgsImV4cCI6MTY3NDA1MTE2OH0.LNHz6ZNf0CaiAko9kDV7C62B5Stizii6DLoxHNgY4o4
+
+{
+  "movieId": "63c538edb63bcb91137d46c2"
+}
+
+###
+## Удалить фильм из списка «К просмотру»
+DELETE http://localhost:4000/users/favourites HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImV4YW1wbGVAb3Zlcmxvb2submV0IiwiaWQiOiI2Mzg0NGMzYjQ1MTM4YTExNTQ0YjY1ODIiLCJpYXQiOjE2NzM4NzgzNjgsImV4cCI6MTY3NDA1MTE2OH0.LNHz6ZNf0CaiAko9kDV7C62B5Stizii6DLoxHNgY4o4
+
+{
+  "movieId": "63c538edb63bcb91137d46c2"
+}
+
+###
+## Список комментариев к фильму по movieId
+GET http://localhost:4000/movies/63c538edb63bcb91137d46c2/comments HTTP/1.1
+
+# Добавить новый комментарий к определённому фильму
+###
+## Комментарий 1
+POST http://localhost:4000/comments HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImV4YW1wbGVAb3Zlcmxvb2submV0IiwiaWQiOiI2Mzg0NGMzYjQ1MTM4YTExNTQ0YjY1ODIiLCJpYXQiOjE2NzM4NzgzNjgsImV4cCI6MTY3NDA1MTE2OH0.LNHz6ZNf0CaiAko9kDV7C62B5Stizii6DLoxHNgY4o4
+
+{
+  "text": "Классный фильм!",
+  "rating": 8,
+  "userId": "637f8166e38b0c2e35e98d94",
+  "movieId": "63c538edb63bcb91137d46c2"
+}
+
+###
+## Комментарий 2
+POST http://localhost:4000/comments HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImV4YW1wbGVAb3Zlcmxvb2submV0IiwiaWQiOiI2Mzg0NGMzYjQ1MTM4YTExNTQ0YjY1ODIiLCJpYXQiOjE2NzM4NzgzNjgsImV4cCI6MTY3NDA1MTE2OH0.LNHz6ZNf0CaiAko9kDV7C62B5Stizii6DLoxHNgY4o4
+
+{
+  "text": "Так себе фильм",
+  "rating": 3,
+  "userId": "639aab7efb43b643291f1f80",
+  "movieId": "63c538edb63bcb91137d46c2"
+}
+
+# Создание нового пользователя
 ###
 ## Регистрация пользователя 1
 POST http://localhost:4000/users/register HTTP/1.1
@@ -22,6 +153,7 @@ Content-Type: application/json
   "password": "example123"
 }
 
+# Вход в закрытую часть приложения
 ###
 ## Логин пользователя 1
 POST http://localhost:4000/users/login HTTP/1.1
@@ -43,6 +175,11 @@ Content-Type: application/json
 }
 
 ###
+## Проверка состояния (токена) пользователя
+GET http://localhost:4000/users/login HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImV4YW1wbGVAb3Zlcmxvb2submV0IiwiaWQiOiI2Mzg0NGMzYjQ1MTM4YTExNTQ0YjY1ODIiLCJpYXQiOjE2NzM4NzgzNjgsImV4cCI6MTY3NDA1MTE2OH0.LNHz6ZNf0CaiAko9kDV7C62B5Stizii6DLoxHNgY4o4
+
+###
 ## Отправка аватарки пользователя
 POST http://localhost:4000/users/639aab7efb43b643291f1f80/avatar HTTP/1.1
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -53,117 +190,3 @@ Content-Type: image/png
 
 < /Users/administrator/avatar.png
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
-
-###
-## Проверка токена пользователя
-GET http://localhost:4000/users/login HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImV4YW1wbGVAb3Zlcmxvb2submV0IiwiaWQiOiI2Mzg0NGMzYjQ1MTM4YTExNTQ0YjY1ODIiLCJpYXQiOjE2NzE1NDM5NTMsImV4cCI6MTY3MTcxNjc1M30.T1hRSP6AXjxEaV2V_Ny6NyHrYRMCSo-CSRfd7jUv8dA
-
-###
-## Получить список фильмов «К просмотру»
-GET http://localhost:4000/users/favourites HTTP/1.1
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImV4YW1wbGVAb3Zlcmxvb2submV0IiwiaWQiOiI2Mzg0NGMzYjQ1MTM4YTExNTQ0YjY1ODIiLCJpYXQiOjE2NzE1NDM5NTMsImV4cCI6MTY3MTcxNjc1M30.T1hRSP6AXjxEaV2V_Ny6NyHrYRMCSo-CSRfd7jUv8dA
-
-###
-## Комментарий 1
-POST http://localhost:4000/comments HTTP/1.1
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImV4YW1wbGVAb3Zlcmxvb2submV0IiwiaWQiOiI2Mzg0NGMzYjQ1MTM4YTExNTQ0YjY1ODIiLCJpYXQiOjE2NzE1NDM5NTMsImV4cCI6MTY3MTcxNjc1M30.T1hRSP6AXjxEaV2V_Ny6NyHrYRMCSo-CSRfd7jUv8dA
-
-{
-  "text": "Классный фильм!",
-  "rating": 8,
-  "userId": "637f8166e38b0c2e35e98d94",
-  "movieId": "6352ad1e45a88ec5bc632294"
-}
-
-###
-## Комментарий 2
-POST http://localhost:4000/comments HTTP/1.1
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImV4YW1wbGUyQG92ZXJsb29rLm5ldCIsImlkIjoiNjM5YWFiN2VmYjQzYjY0MzI5MWYxZjgwIiwiaWF0IjoxNjcxNTQ2NzE1LCJleHAiOjE2NzE3MTk1MTV9.r13-w2mQRkGt2tOzuMA_XmyReIPCYKnvns4ycfCmSYo
-
-{
-  "text": "Так себе фильм",
-  "rating": 3,
-  "userId": "639aab7efb43b643291f1f80",
-  "movieId": "6352ad1e45a88ec5bc632294"
-}
-
-###
-## Список комментариев к фильму по movieId
-GET http://localhost:4000/movies/6352ad1e45a88ec5bc632294/comments HTTP/1.1
-
-###
-## Создание фильма
-POST http://localhost:4000/movies/create HTTP/1.1
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImV4YW1wbGVAb3Zlcmxvb2submV0IiwiaWQiOiI2Mzg0NGMzYjQ1MTM4YTExNTQ0YjY1ODIiLCJpYXQiOjE2NzE1NDM5NTMsImV4cCI6MTY3MTcxNjc1M30.T1hRSP6AXjxEaV2V_Ny6NyHrYRMCSo-CSRfd7jUv8dA
-
-{
-  "title": "aaa",
-  "description": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-  "publishingDate": "2007-07-13T14:59:48.903Z",
-  "genre": "romance",
-  "releaseYear": 2009,
-  "rating": 8,
-  "previewPath": "https://www.what-to-watch.ru/preview/example",
-  "moviePath": "https://www.what-to-watch.ru/example",
-  "actors": ["aaa"],
-  "director": "aaa",
-  "durationInMinutes": 1,
-  "posterPath": "example.jpg",
-  "userId": "63844c3b45138a11544b6582",
-  "backgroundImagePath": "background/example.jpg",
-  "backgroundColor": "blue"
-}
-
-###
-## Редактирование карточки фильма 63a1f585ec6c31b3d90647af обладателем (63844c3b45138a11544b6582)
-PATCH http://localhost:4000/movies/63a1f585ec6c31b3d90647af HTTP/1.1
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImV4YW1wbGVAb3Zlcmxvb2submV0IiwiaWQiOiI2Mzg0NGMzYjQ1MTM4YTExNTQ0YjY1ODIiLCJpYXQiOjE2NzE1NDM5NTMsImV4cCI6MTY3MTcxNjc1M30.T1hRSP6AXjxEaV2V_Ny6NyHrYRMCSo-CSRfd7jUv8dA
-
-{
-  "title": "bbbb",
-  "description": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-  "publishingDate": "2022-10-22T22:55:33.903Z",
-  "genre": "drama",
-  "releaseYear": 1999,
-  "rating": 8,
-  "previewPath": "https://www.what-to-watch.ru/example2_preview",
-  "moviePath": "https://www.what-to-watch.ru/example2",
-  "actors": [],
-  "director": "bbb",
-  "durationInMinutes": 100,
-  "posterPath": "example2.jpg",
-  "backgroundImagePath": "example2.jpg",
-  "backgroundColor": "red",
-  "isPromo": true
-}
-
-###
-## Удаление карточки фильма
-DELETE http://localhost:4000/movies/63a1f585ec6c31b3d90647af HTTP/1.1
-
-###
-## Получить список фильмов
-GET http://localhost:4000/movies HTTP/1.1
-Accept: application/json
-
-###
-## Получение списка фильмов конкретного жанра
-GET http://localhost:4000/movies?genre=romance HTTP/1.1
-Accept: application/json
-
-###
-## Получение промо-фильма
-GET http://localhost:4000/movies/promo HTTP/1.1
-Accept: application/json
-
-###
-## Получение детальной информации по фильму
-GET http://localhost:4000/movies/639b285d42b8e00bbe753a5c HTTP/1.1
-Accept: application/json
