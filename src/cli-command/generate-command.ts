@@ -1,8 +1,8 @@
-import TSVFileWriter from '../common/file-writer/file-writer.js';
 import got from 'got';
-import MovieGenerator from '../common/movie-generator/movie-generator.js';
 import { MockData } from '../types/mock-data.type.js';
+import TSVFileWriter from '../common/file-writer/file-writer.js';
 import { CliCommandInterface } from './cli-command.interface.js';
+import MovieGenerator from '../common/movie-generator/movie-generator.js';
 
 export default class GenerateCommand implements CliCommandInterface {
   public readonly name = '--generate';

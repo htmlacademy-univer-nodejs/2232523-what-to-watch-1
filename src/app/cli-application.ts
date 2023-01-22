@@ -1,4 +1,5 @@
 import { CliCommandInterface } from '../cli-command/cli-command.interface.js';
+
 type ParsedCommand = Record<string ,string[]>;
 
 export default class CLIApplication {
