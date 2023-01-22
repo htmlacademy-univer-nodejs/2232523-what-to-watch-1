@@ -1,9 +1,9 @@
-import {NextFunction, Request, Response} from 'express';
 import * as jose from 'jose';
-import {MiddlewareInterface} from '../../types/middleware.interface.js';
-import {createSecretKey} from 'crypto';
+import { createSecretKey } from 'crypto';
 import HttpError from '../errors/http-error.js';
-import {StatusCodes} from 'http-status-codes';
+import { StatusCodes } from 'http-status-codes';
+import { NextFunction, Request, Response } from 'express';
+import { MiddlewareInterface } from '../../types/middleware.interface.js';
 
 export class AuthenticateMiddleware implements MiddlewareInterface {
   constructor(private readonly jwtSecret: string) {}

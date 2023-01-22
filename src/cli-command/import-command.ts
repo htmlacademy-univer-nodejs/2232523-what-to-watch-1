@@ -1,20 +1,20 @@
-import { DatabaseInterface } from '../common/database-client/database.interface.js';
-import DatabaseService from '../common/database-client/database.service.js';
-import TSVFileReader from '../common/file-reader/tsv-file-reader.js';
-import ConsoleLoggerService from '../common/logger/console-logger.service.js';
-import { LoggerInterface } from '../common/logger/logger.interface.js';
-import { MovieServiceInterface } from '../modules/movie/movie-service.interface.js';
-import { MovieModel } from '../modules/movie/movie.entity.js';
-import MovieService from '../modules/movie/movie.service.js';
-import { UserServiceInterface } from '../modules/user/user-service.interface.js';
-import { UserModel } from '../modules/user/user.entity.js';
-import UserService from '../modules/user/user.service.js';
+import { getURI } from '../utils/db.js';
 import { Movie } from '../types/movie.type.js';
 import { createMovie } from '../utils/common.js';
-import { getURI } from '../utils/db.js';
+import UserService from '../modules/user/user.service.js';
+import { UserModel } from '../modules/user/user.entity.js';
+import MovieService from '../modules/movie/movie.service.js';
+import { MovieModel } from '../modules/movie/movie.entity.js';
+import ConfigService from '../common/config/config.service.js';
 import { CliCommandInterface } from './cli-command.interface.js';
 import {ConfigInterface} from '../common/config/config.interface.js';
-import ConfigService from '../common/config/config.service.js';
+import TSVFileReader from '../common/file-reader/tsv-file-reader.js';
+import { LoggerInterface } from '../common/logger/logger.interface.js';
+import DatabaseService from '../common/database-client/database.service.js';
+import ConsoleLoggerService from '../common/logger/console-logger.service.js';
+import { UserServiceInterface } from '../modules/user/user-service.interface.js';
+import { DatabaseInterface } from '../common/database-client/database.interface.js';
+import { MovieServiceInterface } from '../modules/movie/movie-service.interface.js';
 
 const DEFAULT_USER_PASSWORD = '123456';
 

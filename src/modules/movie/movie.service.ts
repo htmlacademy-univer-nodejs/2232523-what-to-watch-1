@@ -1,12 +1,12 @@
-import {inject, injectable} from 'inversify';
-import {MovieServiceInterface} from './movie-service.interface.js';
-import CreateMovieDto from '../movie/dto/create-movie.dto.js';
-import {DocumentType, types} from '@typegoose/typegoose';
-import {MovieEntity} from './movie.entity.js';
-import {Component} from '../../types/component.type.js';
-import {LoggerInterface} from '../../common/logger/logger.interface.js';
-import UpdateMovieDto from './dto/update-movie.dto.js';
+import { inject, injectable } from 'inversify';
+import { MovieEntity } from './movie.entity.js';
 import { Genre } from '../../types/genre.type.js';
+import UpdateMovieDto from './dto/update-movie.dto.js';
+import { Component } from '../../types/component.type.js';
+import  {DocumentType, types } from '@typegoose/typegoose';
+import CreateMovieDto from '../movie/dto/create-movie.dto.js';
+import { MovieServiceInterface } from './movie-service.interface.js';
+import { LoggerInterface } from '../../common/logger/logger.interface.js';
 
 @injectable()
 export default class MovieService implements MovieServiceInterface {
